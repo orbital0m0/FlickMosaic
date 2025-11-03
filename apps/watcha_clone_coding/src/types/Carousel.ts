@@ -10,6 +10,11 @@ export type CarouselProps = {
   onClick?: () => void;
 };
 
-export type MovieCardProps = { type: 'movie'; slide: CarouselProps; layout: 'overlay' | 'top' | 'left' | 'none' };
+export type MovieCardProps = {
+  type: 'movie';
+  slide: CarouselProps;
+  layout: 'overlay' | 'top' | 'left' | 'none';
+  priority?: boolean;
+};
 
 export type GenredCardProps = { type: 'genres'; slide: Genre; layout: 'overlay' | 'top' | 'left' | 'none' };

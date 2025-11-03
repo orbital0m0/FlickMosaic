@@ -1,14 +1,12 @@
 {
   "extends": "@watcha/tsconfig/react.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "declaration": true,
-    "declarationMap": true,
+    "noEmit": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "types/**/*", "index.ts"],
+  "include": ["src/**/*", "types/**/*", "index.ts", "vite.config.ts", ".storybook/**/*"],
   "exclude": ["node_modules", "dist"]
 }

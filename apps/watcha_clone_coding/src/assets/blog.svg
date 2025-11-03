@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
-  <g fill="none" fillRule="evenodd">
-    <path d="M0 0h48v48H0z"></path>
-    <path
-      fill="currentColor"
-      fillRule="nonzero"
-      d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36m3.51 15c0-1.07-.78-2-2.03-2H21v4h4.48c1.25 0 2.03-.88 2.03-2m-1.87 5H21v4h4.64c1.38 0 2.21-.75 2.21-2 0-1.1-.78-2-2.21-2m.93 7H17V16h9.29c3.3 0 5 1.96 5 4.28 0 2.15-1.36 3.56-3 3.9a4.1 4.1 0 0 1 3.33 4.18c0 2.62-1.72 4.64-5.05 4.64"
-    />
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48" >
+      <g fill="none" fillRule="evenodd">
+        <path d="M0 0h48v48H0z" />
+        <path
+          fill="currentColor"
+          fillRule="nonzero"
+          d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36m3.51 15c0-1.07-.78-2-2.03-2H21v4h4.48c1.25 0 2.03-.88 2.03-2m-1.87 5H21v4h4.64c1.38 0 2.21-.75 2.21-2 0-1.1-.78-2-2.21-2m.93 7H17V16h9.29c3.3 0 5 1.96 5 4.28 0 2.15-1.36 3.56-3 3.9a4.1 4.1 0 0 1 3.33 4.18c0 2.62-1.72 4.64-5.05 4.64"
+        />
+      </g>
+    </svg>

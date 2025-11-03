@@ -1,16 +1,16 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext } from 'react';
 
-import Button from "./Button";
-import useCarousel from "../hooks/useCarousel";
-import { CarouselContextType, RootProps, TrackProps, ArticleProps } from "../types/Carousel";
-import "../styles/Carousel.css";
+import Button from './Button';
+import useCarousel from '../hooks/useCarousel';
+import { CarouselContextType, RootProps, TrackProps, ArticleProps } from '../types/Carousel';
+import '../styles/Carousel.css';
 
 const CarouselContext = createContext<CarouselContextType | undefined>(undefined);
 
 const useCarouselContext = (): CarouselContextType => {
   const context = useContext(CarouselContext);
   if (!context) {
-    throw new Error("Carousel components must be used within Carousel.Root");
+    throw new Error('Carousel components must be used within Carousel.Root');
   }
   return context;
 };
@@ -57,7 +57,7 @@ const Track: React.FC<TrackProps> = ({ children, articleWidth }): React.JSX.Elem
   return (
     <div
       ref={trackRef}
-      className={`slider-track ${!transitionEnabled ? "no-transition" : ""}`}
+      className={`slider-track ${!transitionEnabled ? 'no-transition' : ''}`}
       style={{
         transform: `translateX(-${displayIndex * articleWidth}px)`,
         width: `${clonedSlides.length * articleWidth}px`,
@@ -68,7 +68,7 @@ const Track: React.FC<TrackProps> = ({ children, articleWidth }): React.JSX.Elem
   );
 };
 
-const Article: React.FC<ArticleProps> = ({ articleWidth, layout = "overlay", children }): React.JSX.Element => {
+const Article: React.FC<ArticleProps> = ({ articleWidth, layout = 'overlay', children }): React.JSX.Element => {
   const { clonedSlides, handleTransitionEnd } = useCarouselContext();
 
   return (

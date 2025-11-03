@@ -1,13 +1,18 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { MovieCardProps } from '@/types/Carousel';
 
 const MovieCard = (props: MovieCardProps) => {
   return (
-    <Link to={`/movie/${props.slide.id}`}>
+    <Link href={`/movie/${props.slide.id}`}>
       <div className={`slider-card slider-card-${props.layout}`}>
         <div className="slider-image-container">
-          <img src={props.slide.image} alt={props.slide.title} className="slider-image" />
+          <img
+            src={props.slide.image}
+            alt={props.slide.title}
+            className="slider-image"
+            loading={props.priority ? 'eager' : 'lazy'}
+          />
         </div>
         <div className={`slider-content slider-content-${props.layout}`}>
           {props.layout !== 'left' && <h3 className="slider-title">{props.slide.title}</h3>}

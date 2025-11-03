@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: [main, develop]
 
+env:
+  CI: true
+
 jobs:
   type-check:
     runs-on: ubuntu-latest
@@ -35,26 +38,21 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      
+      # 🚀 Turborepo 캐시 추가
+      - name: Setup Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
             
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
         
-      - name: Debug - 환경 확인
-        run: |
-          echo "Node.js: $(node --version)"
-          echo "pnpm: $(pnpm --version)"
-          echo "작업 디렉토리: $(pwd)"
-          echo "패키지 목록:"
-          pnpm list -r --depth=0
+      # ✅ turbo 명령어로 변경
+      - name: Type check all packages
+        run: pnpm run type-check
+      
           
-      - name: Build workspace packages
-        run: |
-          echo "=== 워크스페이스 패키지들 빌드 ==="
-          # carousel 패키지 빌드 (타입 선언 파일 생성)
-          pnpm --filter @watcha/carousel build
-          
-      - name: Run type check
-        run: pnpm type-check
-        
-      - name: Run lint
-        run: pnpm lint

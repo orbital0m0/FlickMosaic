@@ -1,6 +1,13 @@
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { Carousel } from '@watcha/carousel';
+import { GetStaticProps } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import { searchListKeys } from '../queries/search/queryKeys';
+import { fetchMovieGenres, fetchTodayTrendingMovie } from '../utils/api';
 
 import AppErrorBoundary from '@/components/AppErrorBoundary';
 import GenresCard from '@/components/GenresCard';
@@ -9,8 +16,6 @@ import ThemeTab from '@/components/ThemeTab';
 import useSearchMovies from '@/hooks/useSearchMovies';
 import { useSearchListQuery } from '@/queries/search/useSearchListQuery';
 import { buildImageUrl } from '@/utils/transform';
-
-import '@/styles/Search.css';
 
 const TAB_BUTTONS = [
   {
@@ -29,6 +34,41 @@ const TAB_BUTTONS = [
     name: '다른 장르 보기 V',
   },
 ];
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
+
+  try {
+    // 기존 hook과 동일한 queryKey, queryFn 사용
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: searchListKeys.trending(),
+        queryFn: fetchTodayTrendingMovie,
+      }),
+      queryClient.prefetchQuery({
+        queryKey: searchListKeys.genres(),
+        queryFn: fetchMovieGenres,
+      }),
+    ]);
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+      revalidate: 3600, // 1시간마다 재생성
+    };
+  } catch (error) {
+    console.error('Failed to prefetch movie data:', error);
+
+    // 에러 발생 시 빈 상태로 반환 (클라이언트에서 재시도)
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+      revalidate: 60,
+    };
+  }
+};
 
 const SearchHomePageContent = () => {
   const { highlightedIndex, handleMouseEnter } = useSearchMovies();
@@ -49,7 +89,7 @@ const SearchHomePageContent = () => {
                     className={`trending-item ${index === highlightedIndex ? 'highlighted' : ''}`}
                     onMouseEnter={() => handleMouseEnter(index)}
                   >
-                    <Link to={`/movie/${movie.id}`}>
+                    <Link href={`/movie/${movie.id}`}>
                       <span className="trending-rank">{index + 1}</span>
                       <span className="trending-title">{movie.title}</span>
                     </Link>
@@ -59,9 +99,12 @@ const SearchHomePageContent = () => {
             </div>
             <div className="background-img">
               {trendingQuery.data?.[highlightedIndex] && (
-                <img
+                <Image
                   src={buildImageUrl(trendingQuery.data[highlightedIndex].backdrop_path)}
                   alt={trendingQuery.data[highlightedIndex].title}
+                  width={1280}
+                  height={720}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               )}
             </div>
@@ -93,11 +136,16 @@ const SearchHomePageContent = () => {
 
 const SearchHomePage = () => {
   return (
-    <AppErrorBoundary>
-      <React.Suspense fallback={<SearchHomePageSkeleton />}>
-        <SearchHomePageContent />
-      </React.Suspense>
-    </AppErrorBoundary>
+    <>
+      <Head>
+        <title>검색 - WATCHA</title>
+      </Head>
+      <AppErrorBoundary>
+        <React.Suspense fallback={<SearchHomePageSkeleton />}>
+          <SearchHomePageContent />
+        </React.Suspense>
+      </AppErrorBoundary>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import '@/styles/Skeleton.css';
 
 interface SkeletonProps {
   width?: string | number;

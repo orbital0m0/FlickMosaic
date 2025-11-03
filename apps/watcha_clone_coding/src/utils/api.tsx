@@ -1,68 +1,85 @@
-import { instance } from './axios';
-
+// utils/api.tsx
+import { instance } from '@/utils/axios';
 import { transformMovieList, transformMovieData } from '@/utils/transform';
 
-const movieListQueryString = new URLSearchParams({
+const defaultMovieParams = {
   language: 'ko-KR',
-  page: '1',
-});
+  page: 1,
+};
 
 export const fetchPopularMovieList = () =>
-  instance.get(`/movie/popular?${movieListQueryString}`).then((response) => transformMovieList(response.data.results));
+  instance
+    .get('/movie/popular', { params: defaultMovieParams })
+    .then((response) => transformMovieList(response.data.results));
 
 export const fetchTopRatedMovieList = () =>
   instance
-    .get(`/movie/top_rated?${movieListQueryString}`)
+    .get('/movie/top_rated', { params: defaultMovieParams })
     .then((response) => transformMovieList(response.data.results));
 
 export const fetchNowPlayingMovieList = () =>
   instance
-    .get(`/movie/now_playing?${movieListQueryString}`)
+    .get('/movie/now_playing', { params: defaultMovieParams })
     .then((response) => transformMovieList(response.data.results));
 
-const movieDetailQueryString = new URLSearchParams({
-  language: 'ko-KR',
-  append_to_response: 'credits,videos,belongs_to_collection',
-});
-
 export const fetchMovieDetail = (movieId: string) =>
-  instance.get(`/movie/${movieId}?${movieDetailQueryString}`).then((response) => {
-    if (!response.data || !response.data.id) {
-      throw new Error(`영화 ID ${movieId}에 대한 데이터를 찾을 수 없습니다.`);
-    }
-    return transformMovieData(response.data);
-  });
-
-const movieReviewsQueryString = new URLSearchParams({
-  language: 'en-US',
-  page: '1',
-});
+  instance
+    .get(`/movie/${movieId}`, {
+      params: {
+        language: 'ko-KR',
+        append_to_response: 'credits,videos,belongs_to_collection',
+      },
+    })
+    .then((response) => {
+      if (!response.data || !response.data.id) {
+        throw new Error(`영화 ID ${movieId}에 대한 데이터를 찾을 수 없습니다.`);
+      }
+      return transformMovieData(response.data);
+    });
 
 export const fetchMovieReviews = (movieId: string) =>
   instance
-    .get(`/movie/${movieId}/reviews?${movieReviewsQueryString}`)
+    .get(`/movie/${movieId}/reviews`, {
+      params: {
+        language: 'en-US',
+        page: 1,
+      },
+    })
     .then((response) => response.data || { results: [] });
 
-const movieTrendingQueryString = new URLSearchParams({
-  language: 'ko-KR',
-});
-
 export const fetchTodayTrendingMovie = () =>
-  instance.get(`/trending/movie/day?${movieTrendingQueryString}`).then((response) => response.data.results);
-
-const movieGenresQueryString = new URLSearchParams({
-  language: 'ko',
-});
+  instance
+    .get('/trending/movie/day', {
+      params: { language: 'ko-KR' },
+    })
+    .then((response) => response.data.results);
 
 export const fetchMovieGenres = () =>
-  instance.get(`/genre/movie/list?${movieGenresQueryString}`).then((response) => response.data.genres);
+  instance
+    .get('/genre/movie/list', {
+      params: { language: 'ko' },
+    })
+    .then((response) => response.data.genres);
 
 export const fetchSearchKeywords = (query: string) =>
   instance
-    .get(`/search/movie?query=${query}&include_adult=false&${movieListQueryString}`)
+    .get('/search/movie', {
+      params: {
+        query,
+        include_adult: false,
+        language: 'ko-KR',
+        page: 1,
+      },
+    })
     .then((response) => transformMovieList(response.data.results, { usePoster: true }));
 
 export const fetchSearchGenres = (genreId: string) =>
   instance
-    .get(`/discover/movie?with_genres=${genreId}&${movieListQueryString}`)
+    .get('/discover/movie', {
+      params: {
+        with_genres: genreId,
+        language: 'ko-KR',
+        page: 1,
+      },
+    })
     .then((response) => transformMovieList(response.data.results, { usePoster: true }));

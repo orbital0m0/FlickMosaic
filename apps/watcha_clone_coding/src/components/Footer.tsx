@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import Blog from '@/assets/blog.svg';
-import Facebook from '@/assets/facebook.svg';
-import Instagram from '@/assets/instagram.svg';
-import Twitter from '@/assets/twitter.svg';
+import BlogIcon from '@/assets/blog.svg';
+import FacebookIcon from '@/assets/facebook.svg';
+import InstagramIcon from '@/assets/instagram.svg';
+import TwitterIcon from '@/assets/twitter.svg';
 
 const Footer = (): ReactElement => {
   return (
@@ -86,19 +86,19 @@ const Footer = (): ReactElement => {
       {/* SNS 링크 */}
       <div className="footer-social">
         <a href="#" className="footer-social-link interactive-element" aria-label="Facebook">
-          <Facebook />
+          <FacebookIcon />
         </a>
 
         <a href="#" className="footer-social-link interactive-element" aria-label="Twitter">
-          <Twitter />
+          <TwitterIcon />
         </a>
 
         <a href="#" className="footer-social-link interactive-element" aria-label="Instagram">
-          <Instagram />
+          <InstagramIcon />
         </a>
 
         <a href="#" className="footer-social-link interactive-element" aria-label="Blog">
-          <Blog />
+          <BlogIcon />
         </a>
       </div>
 

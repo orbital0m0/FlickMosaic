@@ -5,7 +5,7 @@ type ButtonProps = React.PropsWithChildren<{
 }> &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ icon, children, ...props }: ButtonProps): React.ReactElement => {
+const Button: React.FC<ButtonProps> = ({ icon, children, ...props }) => {
   return (
     <button type="button" {...props}>
       {icon && <span className="button-icon">{icon}</span>}

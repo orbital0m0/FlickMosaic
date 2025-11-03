@@ -1,12 +1,18 @@
 import watchaConfig from '@watcha/eslint-config';
 
 export default [
+  // 전역 ignore는 별도 객체로 분리
+  {
+    ignores: ['dist/**', 'node_modules/**', '.next/**', 'next-env.d.ts'],
+  },
   ...watchaConfig,
   {
-    ignores: ['dist/**', 'node_modules/**'],
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
+      },
+      globals: {
+        React: 'readonly',
       },
     },
     settings: {

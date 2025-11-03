@@ -1,42 +1,62 @@
 {
-  "name": "@watcha/carousel",
-  "version": "1.0.0",
+  "name": "@orbital0m0/carousel",
+  "version": "1.0.1",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
+      "default": "./dist/index.js"
+    },
+    "./styles": "./dist/index.css"
   },
-  "sideEffects": false,
+  "files": [
+    "dist",
+    "src/styles",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
-  "keywords": [],
+  "keywords": [
+    "carousel",
+    "react",
+    "component"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.15.1",
-  "dependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+  "devDependencies": {
+    "@storybook/addon-docs": "9.1.10",
+    "@storybook/addon-onboarding": "9.1.10",
+    "@storybook/react-vite": "9.1.10",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "@watcha/tsconfig": "workspace:*",
+    "@vitejs/plugin-react": "^4.3.4",
     "@watcha/eslint-config": "workspace:*",
-    "@watcha/prettier-config": "workspace:*"
-  },
-  "devDependencies": {
+    "@watcha/prettier-config": "workspace:*",
+    "@watcha/tsconfig": "workspace:*",
     "eslint": "^9.17.0",
-    "typescript": "^5.9.2"
+    "eslint-plugin-storybook": "9.1.10",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "storybook": "9.1.10",
+    "typescript": "^5.9.2",
+    "vite": "^6.0.11"
   },
   "peerDependencies": {
     "react": "^19.1.1",

@@ -1,4 +1,3 @@
-import '@/styles/Status.css';
 import React from 'react';
 
 type ErrorProps = {
@@ -29,9 +28,22 @@ const ErrorState: React.FC<ErrorProps> = ({ message, retry }) => {
   );
 };
 
+const NotFoundState: React.FC<ErrorProps> = ({ message }) => {
+  return (
+    <div className="status status-not-found" role="alert">
+      <div className="status-title">404</div>
+      <div className="status-desc">{message || '영화를 찾을 수 없습니다'}</div>
+      <button className="status-retry-button" onClick={() => window.history.back()} type="button">
+        이전 페이지로
+      </button>
+    </div>
+  );
+};
+
 const Status = {
   Loading,
   ErrorState,
+  NotFoundState,
 } as const;
 
 export default Status;

@@ -1,22 +1,23 @@
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import Alarm from '@/assets/alarm.svg';
-import Search from '@/assets/search.svg';
-import Watcha from '@/assets/watcha.svg';
+import AlarmIcon from '@/assets/alarm.svg';
+import SearchIcon from '@/assets/search.svg';
+import WatchaIcon from '@/assets/watcha.svg';
 import Button from '@/components/Button';
 import useSearchMovie from '@/hooks/useSearchMovie';
 
-const Header = () => {
-  const location = useLocation();
-  const pathName = location.pathname;
+const Header: React.FC = () => {
+  const { pathname } = useRouter();
   const { query, setQuery, handleEnterKeyDown } = useSearchMovie();
 
   return (
     <header className="header">
       <nav className="header-nav">
         <div className="header-nav-content">
-          <Link to="/" className="header-logo">
-            <Watcha />
+          <Link href="/" className="header-logo">
+            <WatchaIcon />
           </Link>
 
           <div className="header-nav-menu">
@@ -46,22 +47,22 @@ const Header = () => {
         </div>
 
         <div className="header-actions">
-          {pathName !== '/search' ? (
-            <Link to={'/search'}>
+          {pathname !== '/search' ? (
+            <Link href={'/search'}>
               <Button
                 className="header-search-button button-base interactive-element"
                 aria-label="검색"
-                icon={<Search />}
+                icon={<SearchIcon />}
               >
                 <span className="text-base text-large">영화 검색</span>
               </Button>
             </Link>
           ) : (
             <div className="header-search-button button-base interactive-element">
-              <Search />
+              <SearchIcon />
               <input
                 ref={(node) => {
-                  if (pathName === '/search' && node) {
+                  if (pathname === '/search' && node) {
                     node.focus();
                   }
                 }}
@@ -85,7 +86,7 @@ const Header = () => {
           <Button
             className="header-notification-button button-base interactive-element"
             aria-label="알림"
-            icon={<Alarm />}
+            icon={<AlarmIcon />}
           ></Button>
           <Button className="header-login-button button-base interactive-element text-base text-regular">
             로그인/회원가입

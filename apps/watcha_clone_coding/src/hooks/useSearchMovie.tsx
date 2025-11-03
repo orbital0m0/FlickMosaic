@@ -1,22 +1,22 @@
+import { useRouter } from 'next/router';
 import { useEffect, type KeyboardEvent } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import useSearchKeywordStore from '@/stores/useSearchKeywordStore';
 
 const useSearchMovie = () => {
-  const location = useLocation();
+  const { pathname } = useRouter();
   const { query, setQuery, genreId, setGenreId } = useSearchKeywordStore();
 
   // 검색 페이지에서 벗어날 때 초기화
   useEffect(() => {
-    const currentPath = location.pathname;
+    const currentPath = pathname;
 
     // 검색 페이지가 아닐 때 초기화
     if (currentPath !== '/search') {
       setQuery('');
       setGenreId('');
     }
-  }, [location.pathname]);
+  }, [pathname]);
 
   const handleSubmit = () => {
     const trimmed = query.trim();

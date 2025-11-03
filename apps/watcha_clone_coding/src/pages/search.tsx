@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import SearchHomePage from './SearchHomePage';
 import SearchResultPage from './SearchResultPage';
 
@@ -10,7 +12,14 @@ const SearchPage = () => {
     return <SearchResultPage />;
   }
 
-  return <SearchHomePage />;
+  return (
+    <>
+      <Head>
+        <title>검색 - WATCHA</title>
+      </Head>
+      <SearchHomePage />
+    </>
+  );
 };
 
 export default SearchPage;

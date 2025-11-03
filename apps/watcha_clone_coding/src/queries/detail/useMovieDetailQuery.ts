@@ -1,7 +1,7 @@
 import { useSuspenseQueries } from '@tanstack/react-query';
 
-import { movieDetailKeys } from './queryKeys';
-
+// 영화 상세 쿼리 키를 import합니다.
+import { movieDetailKeys } from '@/queries/detail/queryKeys';
 import { fetchMovieDetail, fetchMovieReviews } from '@/utils/api';
 
 export const useMovieDetailQuery = (movieId: string) => {

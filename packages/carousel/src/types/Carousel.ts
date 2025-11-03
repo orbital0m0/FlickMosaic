@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
-import { Genre } from "../types/Movie";
+import { Genre } from '../types/Movie';
 
 export type CarouselProps = {
   id: number;
@@ -37,10 +37,10 @@ export interface TrackProps {
 
 export interface ArticleProps {
   articleWidth: number;
-  layout?: "overlay" | "top" | "left" | "none";
+  layout?: 'overlay' | 'top' | 'left' | 'none';
   children: (slide: CarouselProps | Genre, index: number) => ReactNode;
 }
 
-export type MovieCardProps = { type: "movie"; slide: CarouselProps; layout: "overlay" | "top" | "left" | "none" };
+export type MovieCardProps = { type: 'movie'; slide: CarouselProps; layout: 'overlay' | 'top' | 'left' | 'none' };
 
-export type GenredCardProps = { type: "genres"; slide: Genre; layout: "overlay" | "top" | "left" | "none" };
+export type GenredCardProps = { type: 'genres'; slide: Genre; layout: 'overlay' | 'top' | 'left' | 'none' };

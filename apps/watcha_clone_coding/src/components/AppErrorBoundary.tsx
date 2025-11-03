@@ -37,6 +37,11 @@ class ErrorBoundaryInner extends React.Component<
 
   render(): React.ReactNode {
     if (this.state.hasError) {
+      const isNotFound = (this.state.error as Error)?.name === 'NotFoundError';
+      // 404 에러인 경우
+      if (isNotFound) {
+        return <Status.NotFoundState message={(this.state.error as Error)?.message || '영화를 찾을 수 없습니다'} />;
+      }
       const message = (this.state.error as Error)?.message ?? '알 수 없는 오류가 발생했어요';
       return <Status.ErrorState message={message} retry={this.handleReset} />;
     }
@@ -44,7 +49,7 @@ class ErrorBoundaryInner extends React.Component<
   }
 }
 
-const AppErrorBoundary = ({ children }: AppErrorBoundaryProps): React.ReactElement => {
+const AppErrorBoundary: React.FC<AppErrorBoundaryProps> = ({ children }) => {
   const { reset } = useQueryErrorResetBoundary();
   return <ErrorBoundaryInner onReset={reset}>{children}</ErrorBoundaryInner>;
 };

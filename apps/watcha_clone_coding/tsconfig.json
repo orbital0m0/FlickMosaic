@@ -2,21 +2,20 @@
   "extends": "@watcha/tsconfig/react.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+      "@/*": ["./src/*"],
+      "@watcha/carousel": ["../../packages/carousel"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "jsx": "preserve"
   },
-  "include": [
-    "src/**/*",
-    "types/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*", "config/**/*", "types/**/*", "vite.config.ts", "svg.d.ts", "vite-env.d.ts", "next-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

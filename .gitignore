@@ -1,6 +1,15 @@
 #폴더
 node_modules
 dist
+.next
 
 # 환경설정
 .env*
+apps/watcha_clone_coding/env/.env*
+
+*.tsbuildinfo
+*storybook.log
+storybook-static
+
+# Turborepo
+.turbo
