@@ -97,6 +97,7 @@ jobs:
             # Kill any process still using port 3000
             echo "🔌 Releasing port 3000..."
             docker ps --filter "publish=3000" -q | xargs -r docker stop || true
+            sudo fuser -k 3000/tcp || true
 
             # Start new container
             echo "✨ Starting new container..."
