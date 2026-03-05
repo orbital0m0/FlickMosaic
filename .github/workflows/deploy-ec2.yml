@@ -93,7 +93,11 @@ jobs:
             # Stop and remove old container
             echo "🛑 Stopping old container..."
             docker-compose down || true
-            
+
+            # Kill any process still using port 3000
+            echo "🔌 Releasing port 3000..."
+            docker ps --filter "publish=3000" -q | xargs -r docker stop || true
+
             # Start new container
             echo "✨ Starting new container..."
             docker-compose up -d
