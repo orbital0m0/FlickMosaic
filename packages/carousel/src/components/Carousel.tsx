@@ -62,7 +62,7 @@ const RightButton: React.FC = (): React.JSX.Element => {
 };
 
 const Track: React.FC<TrackProps> = ({ children, articleWidth }): React.JSX.Element => {
-  const { trackRef, transitionEnabled, displayIndex, clonedSlides } = useCarouselContext();
+  const { trackRef, transitionEnabled, displayIndex, clonedSlides, handleTransitionEnd } = useCarouselContext();
 
   return (
     <div
@@ -72,6 +72,7 @@ const Track: React.FC<TrackProps> = ({ children, articleWidth }): React.JSX.Elem
         transform: `translateX(-${displayIndex * articleWidth}px)`,
         width: `${clonedSlides.length * articleWidth}px`,
       }}
+      onTransitionEnd={handleTransitionEnd}
     >
       {children}
     </div>
@@ -79,7 +80,7 @@ const Track: React.FC<TrackProps> = ({ children, articleWidth }): React.JSX.Elem
 };
 
 const Article: React.FC<ArticleProps> = ({ articleWidth, layout = 'overlay', children }): React.JSX.Element => {
-  const { clonedSlides, handleTransitionEnd } = useCarouselContext();
+  const { clonedSlides } = useCarouselContext();
 
   return (
     <>
@@ -88,7 +89,6 @@ const Article: React.FC<ArticleProps> = ({ articleWidth, layout = 'overlay', chi
           key={`${slide.id}-${index}`}
           className="flex-none h-full max-h-full p-2 box-border cursor-pointer min-h-50 flex flex-col overflow-hidden [&_a]:h-full [&_a]:max-h-full [&_a]:w-full [&_a]:max-w-full [&_a]:block [&_a]:overflow-hidden"
           style={{ width: `${articleWidth}px` }}
-          onTransitionEnd={handleTransitionEnd}
         >
           {children(slide, index)}
         </article>
