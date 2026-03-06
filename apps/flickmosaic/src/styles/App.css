@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source "../../../../packages/carousel/src";
 
 @theme {
   --radius-1: 0.25rem;
