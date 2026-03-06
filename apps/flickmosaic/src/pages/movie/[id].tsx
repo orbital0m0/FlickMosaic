@@ -2,6 +2,7 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { movieDetailKeys } from '../../queries/detail/queryKeys';
@@ -30,14 +31,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: 'blocking', // 나머지 영화는 첫 요청 시 생성
+      fallback: true, // 나머지 영화는 스켈레톤 먼저 보여주고 백그라운드 생성
     };
   } catch (error) {
     console.error('Error in getStaticPaths:', error);
 
     return {
       paths: [],
-      fallback: 'blocking',
+      fallback: true,
     };
   }
 };
@@ -319,6 +320,12 @@ const DetailPageContent: React.FC = () => {
 };
 
 const DetailPage: React.FC = () => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <DetailPageSkeleton />;
+  }
+
   return (
     <AppErrorBoundary>
       <React.Suspense fallback={<DetailPageSkeleton />}>
